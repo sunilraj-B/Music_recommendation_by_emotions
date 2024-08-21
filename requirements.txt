@@ -1,10 +1,8 @@
-Django==3.0.5
 Django==5.0.7
 django_environ==0.11.2
 environ==1.0
 numpy==1.24.3
 opencv_python==4.9.0.80
-opencv_python==4.10.0.84
 tensorflow==2.15.0
 tensorflow_intel==2.15.0
 

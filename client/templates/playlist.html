@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Songs</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #fff; /* Light text */
+            padding: 0;
+            margin: 0;
+            background: url('https://ik.imagekit.io/y7obew3qf/77842.jpg?updatedAt=1724252145787') no-repeat center fixed;
+            background-size: cover;
+            overflow: auto; /* Enable scrolling */
+            height: 100vh; /* Full viewport height */
+            width: 100vw;
+        }
+        
+        h1 {
+            color: #fff; /* White text */
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold; /* Make text bold */
+        }
+        
+        .song-item {
+            background-color: rgba(24, 24, 24, 0.8); /* Darker background with opacity */
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+            overflow: hidden;
+            margin-bottom: 20px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .song-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .song-details strong {
+            color: #fff; /* White text */
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .song-details span {
+            color: #b3b3b3; /* Light text color */
+            font-size: 16px;
+            margin-top: 8px;
+        }
+        
+        .button1 {
+            font-size: 1em;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            border: none;
+            background-color: #1DB954; /* Spotify green */
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .button1:hover {
+            background-color: #1ED760; /* Slightly lighter green */
+        }
+        
+        #audioPlayer {
+            margin-top: 20px;
+            display: none;
+            width: 100%;
+            background-color: #1ED760; /* Background color when playing */
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        #audioPlayer.active {
+            display: block;
+        }
+        
+        .glass-audio-player {
+            display: none;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .glass-audio-player.active {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+            border-radius: 12px;
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            overflow: auto; /* Ensure scrolling if needed */
+            width: 100%; /* Full width */
+            margin: 0 auto; /* Center container */
+            max-width: 1200px; /* Optional: limit max width for large screens */
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Playlist Songs</h1>
+
+    <div class="container">
+        <div class="row">
+            {% for song in songs %}
+            <div class="col-md-4">
+                <div class="song-item">
+                    <div class="song-details">
+                        <strong>{{ song.track_name }}</strong><br>
+                        <span>Artist: {{ song.artist_name }}</span><br>
+                        <span>Album: {{ song.album_name }}</span>
+                    </div>
+                    <div class="d-grid gap-2 col-12 mx-auto">
+                        <button class="button1" onclick="playSong('{{ song.preview_url }}')">Play now</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <audio id="audioPlayer" class="glass-audio-player p-3" controls>
+        Your browser does not support the audio element.
+    </audio>
+
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function playSong(previewUrl) {
+            var audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = previewUrl;
+            audioPlayer.classList.add('active');
+            audioPlayer.play();
+        }
+    </script>
+</body>
+</html>

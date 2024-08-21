@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+        }
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Ensures video is behind other content */
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9); /* Slightly more opaque background for better readability */
+            padding: 30px;
+            position: center
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative; /* To ensure it sits above the video */
+            z-index: 1; /* Ensures content is above the video */
+            max-width: 600px; /* Maximum width for larger screens */
+            margin: 0 auto; /* Center the container */
+            margin-top: 20px; /* Add some margin at the top */
+        }
+        .btn-custom {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1.25rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3; /* Darker shade for hover effect */
+        }
+        @media (max-width: 576px) {
+            .container {
+                padding: 15px;
+            }
+            .btn-custom {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+        }
+        .footer-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            width: 100%; /* Full width */
+        }
+        .footer-img {
+            max-width: 80%; /* Responsive width */
+            height: auto; /* Maintain aspect ratio */
+            max-height: 200px; /* Maximum height */
+            margin-top: 20px; /* Space above the image */
+            display: block; /* Ensure block display for centering */
+        }
+    </style>
+</head>
+<body>
+    <video class="video-background" autoplay muted loop id="bg-video">
+        <source src="{% static 'bg.mp4' %}" type="video/mp4">
+        <!-- Provide fallback content here -->
+        Your browser does not support HTML5 video.
+    </video>
+    {% comment %} <img src="{%static 'pic.png'%}" alt="#"> {% endcomment %}
+    <div class="container">
+        <h1 class="my-4">Enjoy the Emotion</h1>
+        <form method="POST" action="{% url 'detect_emotion' %}">
+            {% csrf_token %}
+            <button class="btn-custom btn btn-lg" type="submit" name="start_capturing" value="true">Start Capturing</button>
+        </form>
+    </div>
+
+    <div class="footer-container">
+        <img src="{% static 'pic.png' %}" alt="Footer Image" class="footer-img">
+    </div>
+    
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
